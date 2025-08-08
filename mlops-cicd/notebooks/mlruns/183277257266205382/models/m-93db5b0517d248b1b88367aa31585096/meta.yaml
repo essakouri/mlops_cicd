@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/a.ESSAKOURI/mlops_cicd/mlops-cicd/notebooks/mlruns/183277257266205382/models/m-93db5b0517d248b1b88367aa31585096/artifacts
+creation_timestamp: 1754658008316
+experiment_id: '183277257266205382'
+last_updated_timestamp: 1754658020596
+model_id: m-93db5b0517d248b1b88367aa31585096
+model_type: null
+name: debonair-bug-745
+source_run_id: 512612842b86494388b16026368d0ab7
+status: 2
+status_message: null

@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/a.ESSAKOURI/mlops_cicd/mlops-cicd/notebooks/mlruns/183277257266205382/66a6ff8db6834850a273732c4bda0315/artifacts
+end_time: 1754657671754
+entry_point_name: ''
+experiment_id: '183277257266205382'
+lifecycle_stage: active
+run_id: 66a6ff8db6834850a273732c4bda0315
+run_name: silent-ram-776
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1754657564379
+status: 4
+tags: []
+user_id: a.ESSAKOURI

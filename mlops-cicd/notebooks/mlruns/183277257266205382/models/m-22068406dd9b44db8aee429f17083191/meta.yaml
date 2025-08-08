@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/a.ESSAKOURI/mlops_cicd/mlops-cicd/notebooks/mlruns/183277257266205382/models/m-22068406dd9b44db8aee429f17083191/artifacts
+creation_timestamp: 1754658378333
+experiment_id: '183277257266205382'
+last_updated_timestamp: 1754658383724
+model_id: m-22068406dd9b44db8aee429f17083191
+model_type: null
+name: able-fox-165
+source_run_id: c3a957653d8b4e82872841778bd42122
+status: 2
+status_message: null

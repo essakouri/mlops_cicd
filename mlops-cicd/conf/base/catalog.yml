@@ -2,3 +2,10 @@
 #
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://docs.kedro.org/en/stable/data/data_catalog.html
+
+df_raw:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/train.csv
+  metadata:
+    kedro-viz:
+      layer: feature_engineering

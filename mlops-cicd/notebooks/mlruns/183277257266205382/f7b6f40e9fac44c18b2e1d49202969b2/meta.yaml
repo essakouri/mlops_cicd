@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/a.ESSAKOURI/mlops_cicd/mlops-cicd/notebooks/mlruns/183277257266205382/f7b6f40e9fac44c18b2e1d49202969b2/artifacts
+end_time: 1754657116858
+entry_point_name: ''
+experiment_id: '183277257266205382'
+lifecycle_stage: active
+run_id: f7b6f40e9fac44c18b2e1d49202969b2
+run_name: salty-grouse-236
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1754657027272
+status: 4
+tags: []
+user_id: a.ESSAKOURI

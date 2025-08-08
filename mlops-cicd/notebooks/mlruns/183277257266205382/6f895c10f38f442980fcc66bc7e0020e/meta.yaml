@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/a.ESSAKOURI/mlops_cicd/mlops-cicd/notebooks/mlruns/183277257266205382/6f895c10f38f442980fcc66bc7e0020e/artifacts
+end_time: 1754656870699
+entry_point_name: ''
+experiment_id: '183277257266205382'
+lifecycle_stage: active
+run_id: 6f895c10f38f442980fcc66bc7e0020e
+run_name: legendary-shrew-588
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1754656865965
+status: 4
+tags: []
+user_id: a.ESSAKOURI

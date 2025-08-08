@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/a.ESSAKOURI/mlops_cicd/mlops-cicd/notebooks/mlruns/183277257266205382/4605fa52d35b483d8f1bcf89280b5de6/artifacts
+end_time: 1754657253405
+entry_point_name: ''
+experiment_id: '183277257266205382'
+lifecycle_stage: active
+run_id: 4605fa52d35b483d8f1bcf89280b5de6
+run_name: agreeable-wren-686
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1754657186580
+status: 4
+tags: []
+user_id: a.ESSAKOURI

@@ -1,0 +1,6 @@
+artifact_location: file:///c:/Users/a.ESSAKOURI/mlops_cicd/mlops-cicd/notebooks/mlruns/183277257266205382
+creation_time: 1754655924467
+experiment_id: '183277257266205382'
+last_update_time: 1754655924467
+lifecycle_stage: active
+name: Test Mlflow Notebook

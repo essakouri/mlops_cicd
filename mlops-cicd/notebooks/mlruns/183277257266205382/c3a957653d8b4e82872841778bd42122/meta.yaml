@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/a.ESSAKOURI/mlops_cicd/mlops-cicd/notebooks/mlruns/183277257266205382/c3a957653d8b4e82872841778bd42122/artifacts
+end_time: 1754658383761
+entry_point_name: ''
+experiment_id: '183277257266205382'
+lifecycle_stage: active
+run_id: c3a957653d8b4e82872841778bd42122
+run_name: glamorous-goat-463
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1754658372774
+status: 3
+tags: []
+user_id: a.ESSAKOURI

@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/a.ESSAKOURI/mlops_cicd/mlops-cicd/notebooks/mlruns/183277257266205382/47674560ddbb4c8280664f5576230e84/artifacts
+end_time: 1754657807692
+entry_point_name: ''
+experiment_id: '183277257266205382'
+lifecycle_stage: active
+run_id: 47674560ddbb4c8280664f5576230e84
+run_name: delightful-owl-323
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1754657695768
+status: 4
+tags: []
+user_id: a.ESSAKOURI

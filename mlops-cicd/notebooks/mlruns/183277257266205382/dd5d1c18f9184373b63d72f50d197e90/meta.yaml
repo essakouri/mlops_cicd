@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/a.ESSAKOURI/mlops_cicd/mlops-cicd/notebooks/mlruns/183277257266205382/dd5d1c18f9184373b63d72f50d197e90/artifacts
+end_time: 1754657434821
+entry_point_name: ''
+experiment_id: '183277257266205382'
+lifecycle_stage: active
+run_id: dd5d1c18f9184373b63d72f50d197e90
+run_name: orderly-hawk-571
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1754657323567
+status: 4
+tags: []
+user_id: a.ESSAKOURI

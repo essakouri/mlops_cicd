@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/a.ESSAKOURI/mlops_cicd/mlops-cicd/notebooks/mlruns/183277257266205382/512612842b86494388b16026368d0ab7/artifacts
+end_time: 1754658020628
+entry_point_name: ''
+experiment_id: '183277257266205382'
+lifecycle_stage: active
+run_id: 512612842b86494388b16026368d0ab7
+run_name: serious-tern-333
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1754657896036
+status: 3
+tags: []
+user_id: a.ESSAKOURI
