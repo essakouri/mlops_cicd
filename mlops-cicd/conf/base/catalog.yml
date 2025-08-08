@@ -9,3 +9,45 @@ df_raw:
   metadata:
     kedro-viz:
       layer: feature_engineering
+
+X_train:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/X_train.csv
+  metadata:
+    kedro-viz:
+      layer: feature_engineering
+
+X_val:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/X_val.csv
+  metadata:
+    kedro-viz:
+      layer: feature_engineering
+
+X_test:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/X_test.csv
+  metadata:
+    kedro-viz:
+      layer: feature_engineering
+
+y_train:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/y_train.csv
+  metadata:
+    kedro-viz:
+      layer: feature_engineering
+
+y_val:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/y_val.csv
+  metadata:
+    kedro-viz:
+      layer: feature_engineering
+
+y_test:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/y_test.csv
+  metadata:
+    kedro-viz:
+      layer: feature_engineering

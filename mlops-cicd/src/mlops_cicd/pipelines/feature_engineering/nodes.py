@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 
 from typing import List, Tuple, Dict
+from sklearn.model_selection import train_test_split
 
 def process_passenger_id(
     df: pd.DataFrame,
@@ -221,3 +222,28 @@ def cast_types(X, feats_dict):
     for i in feats_dict.keys():
         X[i] = X[i].fillna(-1).astype(feats_dict[i])
     return X
+
+def split_train_val_test(
+    X: pd.DataFrame,
+    y: pd.Series
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, pd.Series]:
+    """Splits datasets into train, validation, and test sets (70/15/15 by default).
+
+    First splits into train (70%) and temp (30%), then splits temp into
+    validation (15%) and test (15%).
+
+    Args:
+        X (pd.DataFrame): Features.
+        y (pd.Series): Target.
+
+    Returns:
+        Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, pd.Series]:
+            X_train, X_val, X_test, y_train, y_val, y_test
+
+    Example:
+        >>> X_train, X_val, X_test, y_train, y_val, y_test = split_train_val_test(X, y)
+        >>> print(X_train.shape, X_val.shape, X_test.shape)
+    """
+    X_train, X_temp, y_train, y_temp = train_test_split(X, y, train_size=0.70, random_state=1997)
+    X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, train_size=0.50, random_state=1997)
+    return X_train, X_val, X_test, y_train, y_val, y_test

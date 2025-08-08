@@ -3,7 +3,7 @@ This is a boilerplate pipeline 'feature_engineering'
 generated using Kedro 0.19.14
 """
 from kedro.pipeline import node, Pipeline, pipeline  # noqa
-from .nodes import refine_wth_columns, create_grouped_features, sep_x_y, cast_types
+from .nodes import refine_wth_columns, create_grouped_features, sep_x_y, cast_types, split_train_val_test
 
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -43,6 +43,27 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="X_casted",
                 name="casting_types",
             ),
+            node(
+                func=split_train_val_test,
+                inputs=[
+                    "X_casted",
+                    "y",
+                ],
+                outputs=[
+                    "X_train",
+                    "X_val",
+                    "X_test",
+                    "y_train",
+                    "y_val",
+                    "y_test",
+                ],
+                name="splitting_train_val_test",
+            ),
     ],
     inputs="df_raw",
-    outputs=["X_casted", "y"])
+    outputs=["X_train",
+            "X_val",
+            "X_test",
+            "y_train",
+            "y_val",
+            "y_test",])
