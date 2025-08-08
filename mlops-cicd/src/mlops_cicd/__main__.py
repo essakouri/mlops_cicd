@@ -10,7 +10,7 @@ from kedro.framework.cli.utils import find_run_command
 from kedro.framework.project import configure_project
 
 
-def main(*args, **kwargs) -> Any:
+def main(*args: Any, **kwargs) -> Any:
     package_name = Path(__file__).parent.name
     configure_project(package_name)
 

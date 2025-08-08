@@ -3,10 +3,9 @@ This is a boilerplate pipeline 'feature_engineering'
 generated using Kedro 0.19.14
 """
 
-import pandas as pd
-import numpy as np
+from typing import Dict, Tuple
 
-from typing import List, Tuple, Dict
+import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
@@ -216,7 +215,16 @@ def sep_x_y(df: pd.DataFrame, feats_dict: Dict[str, any], target_name: str) -> T
     return df[list(feats_dict.keys())], df[target_name]
 
 
-def cast_types(X, feats_dict):
+def cast_types(X: pd.DataFrame, feats_dict: Dict[str, str]) -> pd.DataFrame:
+    """Casts columns in DataFrame X to types specified in feats_dict, filling NAs with -1.
+
+    Args:
+        X (pd.DataFrame): The input DataFrame.
+        feats_dict (Dict[str, str]): Dictionary mapping column names to type strings (e.g. 'int', 'float', 'str').
+
+    Returns:
+        pd.DataFrame: The DataFrame with columns cast to the specified types.
+    """
     # TODO: change when creating fillna fct
     for i in feats_dict.keys():
         X[i] = X[i].fillna(-1).astype(feats_dict[i])

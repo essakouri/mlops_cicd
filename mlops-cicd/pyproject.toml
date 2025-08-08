@@ -44,7 +44,9 @@ exclude = [ # Scripts or folders to exclude from linting/formatting
     "docs",
     "tests",
     "data",
-    "mlruns"
+    "mlruns",
+    "__main__.py",
+    "pipeline.py"
 ]
 
 [tool.ruff.lint]

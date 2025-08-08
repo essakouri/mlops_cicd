@@ -1,0 +1,30 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+    -   id: check-yaml # Validates YAML files for syntax errors.
+    -   id: check-toml # Validates TOML files for syntax errors.
+    -   id: end-of-file-fixer # Ensures files end with a newline.
+    -   id: trailing-whitespace # Removes trailing whitespace from files.
+    -   id: check-added-large-files # Checks that no large files (>500kb by default) have been committed.
+
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  # Ruff version.
+  rev: v0.9.1 # Change this if a new version is out.
+  hooks:
+    # Apply Ruff linting fixes.
+    - id: ruff
+      name: ruff fix # We can add arbitrary names to our hooks
+      args: [ --fix ]
+      types_or: [ python, pyi ] # Only scan .py files (and not jupyter notebooks)
+
+    # Run the formatter.
+    - id: ruff-format
+      name: ruff format
+      types_or: [ python, pyi ] # Only format .py files (and not jupyter notebooks)
+
+    # Run the linter one last time to check for remaining issues.
+    - id: ruff
+      name: ruff check
+      args: [ "--output-format" ,"concise" ] # Makes the ruff check output more legible.
+      types_or: [ python, pyi ] # Only scan .py files (and not jupyter notebooks)

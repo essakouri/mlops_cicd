@@ -3,11 +3,14 @@ This is a boilerplate pipeline 'feature_engineering'
 generated using Kedro 0.19.14
 """
 
-from kedro.pipeline import node, Pipeline, pipeline  # noqa
-from .nodes import refine_wth_columns, create_grouped_features, sep_x_y, cast_types, split_train_val_test
+from typing import Any
+
+from kedro.pipeline import Pipeline, node, pipeline  # noqa
+
+from .nodes import cast_types, create_grouped_features, refine_wth_columns, sep_x_y, split_train_val_test
 
 
-def create_pipeline(**kwargs) -> Pipeline:
+def create_pipeline(**kwargs: Any) -> Pipeline:
     return pipeline(
         [
             node(
