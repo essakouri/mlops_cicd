@@ -5,6 +5,8 @@ generated using Kedro 0.19.14
 import pandas as pd
 import numpy as np
 
+from typing import List, Tuple, Dict
+
 def process_passenger_id(
     df: pd.DataFrame,
     colname: str = "PassengerId"
@@ -90,6 +92,35 @@ def process_name(
     df[["first_name", "last_name"]] = df[colname].str.split(" ", expand=True)
     return df
 
+def get_sum_of_fees(df: pd.DataFrame) -> pd.DataFrame:
+    """Calculates the sum of specified fee columns and adds it as a new column.
+
+    This function computes the sum of the 'FoodCourt', 'ShoppingMall', 'Spa', 
+    and 'VRDeck' columns for each row in the DataFrame and adds the result in 
+    a new column named 'sum_of_fees'.
+
+    Args:
+        df (pandas.DataFrame): The input DataFrame containing the fee columns.
+
+    Returns:
+        pandas.DataFrame: The DataFrame with an additional 'sum_of_fees' column.
+
+    Example:
+        >>> import pandas as pd
+        >>> df = pd.DataFrame({
+        ...     'FoodCourt': [10, 20],
+        ...     'ShoppingMall': [5, 15],
+        ...     'Spa': [0, 10],
+        ...     'VRDeck': [2, 8]
+        ... })
+        >>> get_sum_of_fees(df)
+           FoodCourt  ShoppingMall  Spa  VRDeck  sum_of_fees
+        0         10             5    0       2           17
+        1         20            15   10       8           53
+    """
+    df["sum_of_fees"] = df["FoodCourt"] + df['ShoppingMall'] + df['Spa'] + df['VRDeck']
+    return df
+
 def refine_wth_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Applies passenger, cabin, and name processing functions to a DataFrame.
 
@@ -108,4 +139,85 @@ def refine_wth_columns(df: pd.DataFrame) -> pd.DataFrame:
     df = process_passenger_id(df)
     df = process_cabin(df)
     df = process_name(df)
+    df = get_sum_of_fees(df)
     return df
+
+def create_nbr_by_group(df: pd.DataFrame) -> pd.DataFrame:
+    """Adds a 'group_count' column with the size of each group identified by 'group_id'.
+
+    Args:
+        df (pandas.DataFrame): Input DataFrame, must have a 'group_id' column.
+
+    Returns:
+        pandas.DataFrame: DataFrame with an additional 'group_count' column.
+    """
+    grouped = df.groupby(by="group_id").size().reset_index(name="group_count")
+    df = df.merge(grouped, on="group_id", how="left")
+    return df
+
+def create_nbr_by_fam(df: pd.DataFrame) -> pd.DataFrame:
+    """Adds a 'family_size' column with the number of occurrences for each last name.
+
+    Args:
+        df (pandas.DataFrame): Input DataFrame, must have a 'last_name' column.
+
+    Returns:
+        pandas.DataFrame: DataFrame with an additional 'family_size' column.
+    """
+    grouped = df.groupby(by="last_name").size().reset_index(name="family_size")
+    df = df.merge(grouped, on="last_name", how="left")
+    return df
+
+def create_nbr_by_cabin(df: pd.DataFrame) -> pd.DataFrame:
+    """Adds a 'cabin_count' column with the size of each group identified by 'Cabin1'.
+
+    Args:
+        df (pandas.DataFrame): Input DataFrame, must have a 'Cabin1' column.
+
+    Returns:
+        pandas.DataFrame: DataFrame with an additional 'cabin_count' column.
+    """
+    grouped = df.groupby(by="Cabin1").size().reset_index(name="cabin_count")
+    df = df.merge(grouped, on="Cabin1", how="left")
+    return df
+
+def create_grouped_features(df: pd.DataFrame) -> pd.DataFrame:
+    """Adds grouped features: 'group_count', 'family_size', and 'cabin_count'.
+
+    Applies the three counting functions in sequence to the input DataFrame.
+
+    Args:
+        df (pandas.DataFrame): Input DataFrame.
+
+    Returns:
+        pandas.DataFrame: DataFrame with 'group_count', 'family_size', and 'cabin_count' columns added.
+    """
+    df = create_nbr_by_group(df)
+    df = create_nbr_by_fam(df)
+    df = create_nbr_by_cabin(df)
+    return df
+
+def sep_x_y(
+    df: pd.DataFrame,
+    feats_dict: Dict[str, any],
+    target_name: str
+) -> Tuple[pd.DataFrame, pd.Series]:
+    """Splits a DataFrame into features X and target y.
+
+    Args:
+        df (pandas.DataFrame): The input DataFrame.
+        feats_dict (Dict[str, Any]): Dictionary whose keys are feature column names.
+        target_name (str): Name of the target column (y).
+
+    Returns:
+        Tuple[pandas.DataFrame, pandas.Series]: 
+            - X: DataFrame containing feature columns.
+            - y: Series containing the target column.
+    """
+    return df[list(feats_dict.keys())], df[target_name]
+
+def cast_types(X, feats_dict):
+    #TODO: change when creating fillna fct
+    for i in feats_dict.keys():
+        X[i] = X[i].fillna(-1).astype(feats_dict[i])
+    return X
