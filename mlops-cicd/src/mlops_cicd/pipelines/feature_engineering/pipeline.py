@@ -2,13 +2,15 @@
 This is a boilerplate pipeline 'feature_engineering'
 generated using Kedro 0.19.14
 """
+
 from kedro.pipeline import node, Pipeline, pipeline  # noqa
 from .nodes import refine_wth_columns, create_grouped_features, sep_x_y, cast_types, split_train_val_test
 
 
 def create_pipeline(**kwargs) -> Pipeline:
-    return pipeline([
-        node(
+    return pipeline(
+        [
+            node(
                 func=refine_wth_columns,
                 inputs=[
                     "df_raw",
@@ -26,11 +28,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             ),
             node(
                 func=sep_x_y,
-                inputs=[
-                    "df_with_grouped",
-                    "params:features_dict",
-                    "params:target_name"
-                ],
+                inputs=["df_with_grouped", "params:features_dict", "params:target_name"],
                 outputs=["X", "y"],
                 name="separate_x_and_y",
             ),
@@ -59,11 +57,14 @@ def create_pipeline(**kwargs) -> Pipeline:
                 ],
                 name="splitting_train_val_test",
             ),
-    ],
-    inputs="df_raw",
-    outputs=["X_train",
+        ],
+        inputs="df_raw",
+        outputs=[
+            "X_train",
             "X_val",
             "X_test",
             "y_train",
             "y_val",
-            "y_test",])
+            "y_test",
+        ],
+    )

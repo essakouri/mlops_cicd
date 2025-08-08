@@ -34,3 +34,36 @@ project_id = "8f203a20f3cc491eada42db85ea3443b"
 
 [tool.pytest.ini_options]
 addopts = "--cov-report term-missing --cov src/mlops_cicd -ra"
+
+[tool.ruff]
+target-version = "py310" # Python version (examples: 39 for 3.9, 310 for 3.10, etc.)
+line-length = 120 # Maximum line-length for formatting
+exclude = [ # Scripts or folders to exclude from linting/formatting
+    "bin", # ignore whole folder
+    "notebooks",
+    "docs",
+    "tests",
+    "data",
+    "mlruns"
+]
+
+[tool.ruff.lint]
+ignore = [ # Rules to ignore. In this example these are all docstring (D) related rules.
+    "S113",
+    "N803",
+    "N806",
+    "S501",
+    "S301",
+]
+
+select = [ # Sets of rules to check for
+    "I",    # isort
+    "S",    # bandit
+    "E",    # pycodestyle
+    "N",    # pep8-naming
+    "F",    # flake8
+    "T20",
+    "ANN",
+    "ARG",
+    "ANN201"
+]
