@@ -1,0 +1,12 @@
+features_dict:
+  HomePlanet: str
+  CryoSleep: int
+  Destination: str
+  Age: int
+  VIP: int
+  Cabin1: str
+  Cabin3: str
+  group_count: int
+  family_size: int
+  cabin_count: int
+  sum_of_fees: float
