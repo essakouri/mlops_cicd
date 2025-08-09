@@ -1,0 +1,26 @@
+trigger:
+  branches:
+    include:
+    - main
+
+jobs:
+- job:
+  displayName: "ci"
+  pool:
+    vmImage: "ubuntu-latest"
+
+  steps:
+
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: "3.10"
+    displayName: "Set up Python"
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+    displayName: "Install dependencies"
+
+  - script: |
+      ruff check src --config pyproject.toml
+    displayName: "Linting"
