@@ -10,7 +10,10 @@ import mlflow
 import optuna
 import pandas as pd
 from catboost import CatBoostClassifier
+from mlflow.models import infer_signature
 from sklearn.metrics import roc_auc_score
+
+from .tools import _log_roc_curve, _log_shap_global, compute_classification_metrics
 
 
 def _objective(
@@ -113,4 +116,69 @@ def bayes_opti(
             n_trials=n_trials,
         )
         best_params = study.best_params
+        best_params["cat_features"] = cat_features
     return best_params
+
+
+def train_best_model(
+    x_train: pd.DataFrame,
+    x_val: pd.DataFrame,
+    x_test: pd.DataFrame,
+    y_train: pd.Series,
+    y_val: pd.Series,
+    y_test: pd.Series,
+    best_params: Dict[str, Any],
+) -> CatBoostClassifier:
+    """Train the final CatBoost model on all training data, evaluate, and log to MLflow.
+
+    This function concatenates train and validation data, trains a CatBoostClassifier
+    with the best hyperparameters, evaluates on train and test sets, logs metrics,
+    SHAP values, and the ROC curve, and saves the model with signature to MLflow.
+
+    Args:
+        x_train (pd.DataFrame): Training features.
+        x_val (pd.DataFrame): Validation features.
+        x_test (pd.DataFrame): Test features.
+        y_train (pd.Series): Training target.
+        y_val (pd.Series): Validation target.
+        y_test (pd.Series): Test target.
+        best_params (dict): Best hyperparameters for CatBoostClassifier.
+
+    Returns:
+        CatBoostClassifier: The trained CatBoost model.
+    """
+    experiment_name = "Train Best Model"
+    mlflow.set_experiment(experiment_name)
+
+    x_train_all = pd.concat([x_train, x_val])
+    y_train_all = pd.concat([y_train, y_val])
+
+    with mlflow.start_run():
+        model = CatBoostClassifier(**best_params)
+        model.fit(x_train_all, y_train_all)
+
+        # y_pred_train = model.predict(x_train_all)
+        # y_pred_test = model.predict(x_test)
+
+        y_pred_train_proba = model.predict_proba(x_train_all)[:, 1]
+        y_pred_test_proba = model.predict_proba(x_test)[:, 1]
+
+        mlflow.log_params(best_params)
+
+        _log_shap_global(model, x_test)
+        _log_roc_curve(y_test, y_pred_test_proba)
+
+        metrics_train = compute_classification_metrics(y_train_all, y_pred_train_proba)
+        metrics_test = compute_classification_metrics(y_test, y_pred_test_proba)
+
+        # Prefix test metrics for clarity
+        metrics_test = {f"test_{k}": v for k, v in metrics_test.items()}
+        mlflow.log_metrics(metrics_train)
+        mlflow.log_metrics(metrics_test)
+
+        signature = infer_signature(x_val, model.predict(x_val))
+
+        # Log the model with the signature
+        mlflow.catboost.log_model(model, artifact_path="model", signature=signature)
+
+    return model
