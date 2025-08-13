@@ -13,7 +13,15 @@ from catboost import CatBoostClassifier
 from mlflow.models import infer_signature
 from sklearn.metrics import roc_auc_score
 
-from .tools import _log_roc_curve, _log_shap_global, compute_classification_metrics
+from .tools import (
+    _log_roc_curve,
+    _log_shap_global,
+    compute_classification_metrics,
+    log_contour_plots,
+    log_optimization_history,
+    log_param_importance,
+    log_timeline,
+)
 
 
 def _objective(
@@ -117,6 +125,12 @@ def bayes_opti(
         )
         best_params = study.best_params
         best_params["cat_features"] = cat_features
+
+        log_optimization_history(study)
+        log_timeline(study)
+        log_param_importance(study)
+        log_contour_plots(study)
+
     return best_params
 
 

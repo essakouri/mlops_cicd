@@ -1,8 +1,10 @@
+import itertools
 from typing import Dict
 
 import matplotlib.pyplot as plt
 import mlflow
 import numpy as np
+import optuna
 import pandas as pd
 import shap
 from catboost import CatBoostClassifier
@@ -91,3 +93,52 @@ def compute_classification_metrics(y_true: np.ndarray, y_pred_proba: np.ndarray)
         "recall": recall_score(y_true, y_pred),
         "logloss": log_loss(y_true, y_pred_proba),
     }
+
+
+def log_optimization_history(study: optuna.study.Study) -> None:
+    """
+    Log the optimization history plot of an Optuna study to MLflow.
+
+    Parameters:
+        study (optuna.study.Study): The Optuna study object containing the optimization results.
+    """
+    fig = optuna.visualization.plot_optimization_history(study)
+    mlflow.log_figure(fig, "optuna/general/optimization_history.png")
+
+
+def log_timeline(study: optuna.study.Study) -> None:
+    """
+    Log the timeline plot of an Optuna study to MLflow.
+
+    Parameters:
+        study (optuna.study.Study): The Optuna study object containing the optimization results.
+    """
+    fig = optuna.visualization.plot_timeline(study)
+    mlflow.log_figure(fig, "optuna/general/optimization_timeline.png")
+
+
+def log_param_importance(study: optuna.study.Study) -> None:
+    """
+    Log the parameter importance plot of an Optuna study to MLflow.
+
+    Parameters:
+        study (optuna.study.Study): The Optuna study object containing the optimization results.
+    """
+    fig = optuna.visualization.plot_param_importances(study)
+    mlflow.log_figure(fig, "optuna/general/param_importance.png")
+
+
+def log_contour_plots(study: optuna.study.Study) -> None:
+    """
+    Generate and log contour plots for all pairs of hyperparameters in an Optuna study.
+
+    Parameters:
+        study (optuna.study.Study): The Optuna study object containing the optimization results.
+    """
+    param_names = list(study.best_params.keys())
+    # Create all possible pairs of hyperparameters
+    param_pairs = list(itertools.combinations(param_names, 2))
+    for param1, param2 in param_pairs:
+        fig = optuna.visualization.plot_contour(study, params=[param1, param2])
+        filename = f"optuna/contour_plots/{param1}_{param2}.png"
+        mlflow.log_figure(fig, filename)
