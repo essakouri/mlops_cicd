@@ -1,6 +1,7 @@
 on:
   pull_request:
-    branches: main
+    branches:
+      - main
 
 jobs:
   ci:
@@ -10,9 +11,9 @@ jobs:
 
     steps:
       - task: UsePythonVersion@0
+        displayName: "Set up Python"
         inputs:
           versionSpec: "3.10"
-        displayName: "Set up Python"
 
       - script: |
           python -m pip install --upgrade pip
