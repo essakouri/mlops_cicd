@@ -23,3 +23,7 @@ jobs:
   - script: |
       ruff check src --config pyproject.toml
     displayName: "Linting"
+
+  - scripts: |
+      pytest mlops-cicd/tests/ --cov=src --cov-fail-under=40
+    displayName: "Tests coverage"
