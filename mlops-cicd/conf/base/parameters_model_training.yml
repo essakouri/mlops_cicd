@@ -3,4 +3,4 @@
 #
 # Documentation for this file format can be found in "Parameters"
 # Link: https://docs.kedro.org/en/1.0.0/configuration/parameters.html
-n_trials : 2
+n_trials : 30
