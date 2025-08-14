@@ -28,3 +28,12 @@ repos:
       name: ruff check
       args: [ "--output-format" ,"concise" ] # Makes the ruff check output more legible.
       types_or: [ python, pyi ] # Only scan .py files (and not jupyter notebooks)
+
+-   repo: local
+    hooks:
+    -   id: pytest
+        name: Unit tests
+        entry: pytest mlops-cicd/tests/ --cov=src --cov-fail-under=40
+        language: system
+        always_run: true
+        pass_filenames: false
