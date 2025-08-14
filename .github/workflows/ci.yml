@@ -3,27 +3,26 @@ on:
     branches: main
 
 jobs:
-- job:
-  displayName: "ci"
-  pool:
-    vmImage: "ubuntu-latest"
+  ci:
+    displayName: "ci"
+    pool:
+      vmImage: "ubuntu-latest"
 
-  steps:
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: "3.10"
+        displayName: "Set up Python"
 
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: "3.10"
-    displayName: "Set up Python"
+      - script: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        displayName: "Install dependencies"
 
-  - script: |
-      python -m pip install --upgrade pip
-      pip install -r requirements.txt
-    displayName: "Install dependencies"
+      - script: |
+          ruff check src --config pyproject.toml
+        displayName: "Linting"
 
-  - script: |
-      ruff check src --config pyproject.toml
-    displayName: "Linting"
-
-  - scripts: |
-      pytest mlops-cicd/tests/ --cov=src --cov-fail-under=40
-    displayName: "Tests coverage"
+      - script: |
+          pytest mlops-cicd/tests/ --cov=src --cov-fail-under=40
+        displayName: "Tests coverage"
