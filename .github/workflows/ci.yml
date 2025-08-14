@@ -1,3 +1,5 @@
+name: CI
+
 on:
   pull_request:
     branches:
@@ -5,25 +7,22 @@ on:
 
 jobs:
   ci:
-    displayName: "ci"
-    pool:
-      vmImage: "ubuntu-latest"
-
+    runs-on: ubuntu-latest
     steps:
-      - task: UsePythonVersion@0
-        displayName: "Set up Python"
-        inputs:
-          versionSpec: "3.10"
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-      - script: |
+      - name: Install dependencies
+        run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-        displayName: "Install dependencies"
 
-      - script: |
+      - name: Linting
+        run: |
           ruff check src --config pyproject.toml
-        displayName: "Linting"
 
-      - script: |
+      - name: Tests coverage
+        run: |
           pytest mlops-cicd/tests/ --cov=src --cov-fail-under=40
-        displayName: "Tests coverage"
